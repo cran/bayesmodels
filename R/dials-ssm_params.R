@@ -14,7 +14,6 @@
 #'  - `tree_depth`: Maximum depth of the trees
 #'
 #' @examples
-#' trend_model()
 #'
 #' damped_model()
 #'
@@ -23,7 +22,7 @@
 #'
 #' @name ssm_params
 
-#' @export
+#' @
 #' @return A parameter
 #' @rdname ssm_params
 trend_model <- function() {

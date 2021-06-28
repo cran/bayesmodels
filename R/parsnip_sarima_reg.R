@@ -141,7 +141,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' #The example works, just building problem
 #' library(dplyr)
 #' library(parsnip)
 #' library(rsample)

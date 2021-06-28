@@ -126,7 +126,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' #The example works, just building problem
 #' library(dplyr)
 #' library(parsnip)
 #' library(rsample)
@@ -365,6 +364,7 @@ predict.svm_stan_fit_impl <- function(object, new_data, ...) {
 #'
 #' @inheritParams parsnip::predict.model_fit
 #' @param ... Additional arguments passed to `forecast::Arima()`
+#' 
 #' @return A prediction
 #'
 #' @export

@@ -76,7 +76,6 @@ These are applied in the \code{fit()} function:\if{html}{\out{<div class="r">}}\
 \examples{
 
 \dontrun{
-#The example works, just building problem
 library(tidymodels)
 library(bayesmodels)
 library(modeltime)

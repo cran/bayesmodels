@@ -98,7 +98,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' #The example works, just building problem
 #' library(dplyr)
 #' library(parsnip)
 #' library(rsample)
@@ -241,6 +240,7 @@ translate.random_walk_reg <- function(x, engine = x$engine, ...) {
 #' @param tree.depth An integer of the maximum depth of the trees evaluated during each iteration. By default is 10.
 #' @param seed An integer with the seed for using when predicting with the model.
 #' @param ... Additional arguments passed to `forecast::Arima`
+#' 
 #' @return A modeltime model
 #'
 #' @export
@@ -321,6 +321,7 @@ predict.random_walk_stan_fit_impl <- function(object, new_data, ...) {
 #'
 #' @inheritParams parsnip::predict.model_fit
 #' @param ... Additional arguments passed to `forecast::Arima()`
+#' 
 #' @return A prediction
 #'
 #' @export

@@ -126,7 +126,6 @@ For univariate analysis, you must include a date or date-time feature. Simply us
 
 \examples{
 \dontrun{
-#The example works, just building problem
 library(dplyr)
 library(parsnip)
 library(rsample)

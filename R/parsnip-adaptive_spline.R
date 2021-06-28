@@ -99,7 +99,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' #The example works, just building problem
 #' library(dplyr)
 #' library(parsnip)
 #' library(rsample)
@@ -234,7 +233,9 @@ translate.adaptive_spline <- function(x, engine = x$engine, ...) {
 #' @param maxInt.cat (categorical input only) integer for maximum degree of interaction of categorical inputs
 #' @param npart minimum number of non-zero points in a basis function
 #' @param ... Extra arguments
+#' 
 #' @return A modeltime model
+#'
 #' @export
 adaptive_spline_stan_fit_impl <- function(x, y, degree = 1, maxInt = 3, maxInt.cat = 3, npart = NULL, ...) {
     
@@ -326,6 +327,7 @@ predict.adaptive_spline_stan_fit_impl <- function(object, new_data, ...) {
 #'
 #' @inheritParams parsnip::predict.model_fit
 #' @param ... Additional arguments passed to `forecast::Arima()`
+#' 
 #' @return A prediction
 #'
 #' @export

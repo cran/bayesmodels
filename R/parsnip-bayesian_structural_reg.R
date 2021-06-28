@@ -80,7 +80,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' #The example works, just building problem
 #' library(dplyr)
 #' library(parsnip)
 #' library(rsample)
@@ -201,6 +200,7 @@ translate.bayesian_structural_reg <- function(x, engine = x$engine, ...) {
 #' @param family The model family for the observation equation. 
 #' Non-Gaussian model families use data augmentation to recover a conditionally Gaussian model.
 #' @param ... Additional arguments passed to `forecast::Arima`
+#' 
 #' @return A modeltime model
 #'
 #' @export
@@ -218,6 +218,24 @@ bayesian_structural_stan_fit_impl <- function(formula, data, family = "gaussian"
         
         args[["niter"]] <- 1000
         
+    }
+    
+    y <- all.vars(formula)[1]
+    x <- attr(stats::terms(formula, data = data), "term.labels")
+    
+    predictors <- data %>% dplyr::select(dplyr::all_of(x))
+    
+    # INDEX 
+    # Determine Index Col
+    index_tbl <- modeltime::parse_index_from_data(predictors)
+    idx_col   <- names(index_tbl)
+    
+    x <- dplyr::setdiff(x, idx_col)
+    
+    if (length(x)==0){
+        formula <- as.vector(purrr::as_vector(data[, y]))
+    } else {
+        formula <- stats::reformulate(termlabels = x, response = y)   
     }
     
     args[["formula"]] <- formula
@@ -248,6 +266,7 @@ bayesian_structural_stan_fit_impl <- function(formula, data, family = "gaussian"
         
         # Preprocessing Recipe (prepped) - Used in predict method
         extras = list(
+            date_var = idx_col
         ),
         
         # Description - Convert arima model parameters to short description
@@ -273,6 +292,7 @@ predict.bayesian_structural_stan_fit_impl <- function(object, new_data, ...) {
 #'
 #' @inheritParams parsnip::predict.model_fit
 #' @param ... Additional arguments passed to `forecast::Arima()`
+#' 
 #' @return A prediction
 #'
 #' @export
@@ -280,10 +300,21 @@ bayesian_structural_stan_predict_impl <- function(object, new_data, ...) {
     
     # PREPARE INPUTS
     model       <- object$models$model_1
+    date_var    <- object$extras$date_var
     
-    # PREDICTIONS
+    old_data <- new_data %>% dplyr::select(-date_var)
     
-    preds <- stats::predict(model, newdata = new_data, ...)$mean
+    if (ncol(old_data) == 1){
+        comp <- apply(old_data, 1, is.na) %>% sum()
+    } else {
+        comp <- apply(old_data, 1, is.na) %>% apply(., 1, sum)
+    }
+    
+    if (all(comp==dim(old_data)[1]) | ncol(old_data) == 1){
+        preds <- stats::predict(model, h = nrow(new_data), ...)$mean
+    } else {
+        preds <- stats::predict(model, newdata = new_data, ...)$mean
+    }
     
     return(preds)
     

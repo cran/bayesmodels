@@ -102,7 +102,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' #The example works, just building problem
 #' library(dplyr)
 #' library(parsnip)
 #' library(rsample)
@@ -235,6 +234,7 @@ translate.exponential_smoothing <- function(x, engine = x$engine, ...) {
 #' @param error.size.method Either "std" (monotonically, but slower than proportionally, 
 #' growing with the series values) or "innov" (proportional to a smoothed abs size of innovations, i.e. surprises)
 #' @param ... Additional arguments passed to `forecast::Arima`
+#' 
 #' @return A modeltime model
 #'
 #' @export
@@ -346,6 +346,7 @@ predict.exp_smoothing_stan_fit_impl <- function(object, new_data, ...) {
 #'
 #' @inheritParams parsnip::predict.model_fit
 #' @param ... Additional arguments passed to `forecast::Arima()`
+#' 
 #' @return A prediction
 #'
 #' @export

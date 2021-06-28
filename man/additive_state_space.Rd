@@ -170,7 +170,6 @@ Note that date or date-time class values are excluded from \code{xreg}.
 
 \examples{
 \dontrun{
-#The example works, just building problem
 library(dplyr)
 library(parsnip)
 library(rsample)
